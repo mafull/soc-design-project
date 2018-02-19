@@ -1,5 +1,6 @@
 module gesture_av(
-	output logic [6:0] segments,
+	output wire [6:0] segments,
+	output wire [7:0] volumeLEDs,
 	input wire button,
 	input wire Clock, nReset
 );
@@ -10,6 +11,7 @@ button_state_t prevButtonState;
 
 
 logic [3:0] count;
+logic [2:0] volume;
 
 
 always_ff @ (
@@ -39,9 +41,17 @@ always_ff @ (
 end
 
 
+assign volume = count % 8;
+
+
 seven_segment seg1(
 	segments,
 	count
+);
+
+led_volume_display vol_disp(
+	volumeLEDs,
+	volume
 );
 
 endmodule
