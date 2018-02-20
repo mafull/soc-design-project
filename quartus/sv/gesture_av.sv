@@ -1,6 +1,7 @@
 module gesture_av(
 	output wire [6:0] segments,
-	output wire [7:0] volumeLEDs,
+	output wire [6:0] volumeLEDs,
+	output wire [6:0] frequencySegments [2],
 	input wire button,
 	input wire Clock, nReset
 );
@@ -52,6 +53,11 @@ seven_segment seg1(
 led_volume_display vol_disp(
 	volumeLEDs,
 	volume
+);
+
+seg_frequency_display freq_disp(
+	frequencySegments,
+	{count,~count}
 );
 
 endmodule
